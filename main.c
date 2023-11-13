@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	_printf("%s", "string");
+	_printf("%s\n", "string");
 	_printf("%%\n");
 	_printf("%c\n", 'h');
 
