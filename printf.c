@@ -1,42 +1,57 @@
-#include <stdio.h>
-#include <stdarg.h>
-int count;
-char ch;
-int print_char(char ch) {
-    putchar(ch);
-    return 1;
-}
+#include "main.h"
 
-int print_str(const char *str) {
-    int count = 0;
-    while (*str != '\0') {
-        putchar(*str++);
-        count++;
-    }
-    return count;
-}
+/**
+ * _printf - prints anything
+ * @format: the format string
+ * Return: returns the length of inputs
+ */
+int _printf(const char *format, ...)
+{
+    int i = 0;
+    va_list list;
+    int lenst;
 
-int _printf(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
-    count = 0;
-
-    while ((ch = *format++) != '\0') {
-        if (ch == '%') {
-            ch = *format++;
-            if (ch == 'c') {
-                count += print_char(va_arg(args, int));
-            } else if (ch == 's') {
-                count += print_str(va_arg(args, const char *));
-            } else if (ch == '%') {
-                count += print_char('%');
-            } else {
-            }
-        } else {
-            count += print_char(ch);
+    if (format == NULL)
+        return (-1); /*returns error*/
+    va_start(list, format);
+    while (*format)
+    {
+        if (*format != '%')
+        {
+            write(1, format, 1);
+            i++;
         }
-    }
+        else if (*(format + 1) == '%')
+        {
+            write(1, "%", 1);
+            i++;
+            format += 2; /* Skip both '%' characters*/
+            continue;
+        }
+        else if (*(format + 1) == 's')
+        {
+            char *str = va_arg(list, char*);
 
-    va_end(args);
-    return count;
+            lenst = strlen(str);
+            write(1, str, lenst);
+            i += lenst;
+            format += 2; /* Skip the 's' character*/
+            continue;
+        }
+        else if (*(format + 1) == 'c')
+        {
+            char c = va_arg(list, int);
+
+            write(1, &c, 1);
+            i++;
+            format += 2; /* Skip the 'c' character*/
+            continue;
+        }
+        write(1, format, 1);
+        i++;
+        format++;
+    }
+    va_end(list);
+    return (i);
 }
+
