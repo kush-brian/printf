@@ -1,50 +1,42 @@
-#include "main.h"
-/**
- * _printf - prints anything
- * @format: the format string
- * Return: returns the length of inputs
- */
-int _printf(const char *format, ...)
-{
-	int i = 0;
-	va_list list;
-	int lenst;
+#include <stdio.h>
+#include <stdarg.h>
+int count;
+char ch;
+int print_char(char ch) {
+    putchar(ch);
+    return 1;
+}
 
-	if (format == NULL)
-		return (-1); /*returns error*/
-	va_start(list, format);
-	while (*format)
-	{
-		if (*format != '%')
-		{
-			write(1, format, 1);
-			i++;
-		}
-		format++;
-		if (*format == '\0')
-			break;
-		if (*format == '%')
-		{
-			write(1, format, 1);
-			i++;
-		}
-		else if (*format == 's')
-		{
-			char *str = va_arg(list, char*);
+int print_str(const char *str) {
+    int count = 0;
+    while (*str != '\0') {
+        putchar(*str++);
+        count++;
+    }
+    return count;
+}
 
-			lenst = strlen(str);
-			write(1, str, lenst);
-			i += lenst;
-		}
-		else if (*format == 'c')
-		{
-			char c = va_arg(list, int);
+int _printf(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    count = 0;
 
-			write(1, &c, 1);
-			i++;
-		}
-		format++;
-	}
-	va_end(list);
-	return (i);
+    while ((ch = *format++) != '\0') {
+        if (ch == '%') {
+            ch = *format++;
+            if (ch == 'c') {
+                count += print_char(va_arg(args, int));
+            } else if (ch == 's') {
+                count += print_str(va_arg(args, const char *));
+            } else if (ch == '%') {
+                count += print_char('%');
+            } else {
+            }
+        } else {
+            count += print_char(ch);
+        }
+    }
+
+    va_end(args);
+    return count;
 }
