@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * _printf2 - prints integers
+ * _printf2: New printf
  * @format: initial specifiers
  * Return: returns count of input
  */
