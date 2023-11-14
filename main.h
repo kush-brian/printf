@@ -7,5 +7,6 @@
 
 int _printf(const char *format, ...);
 char *_rot13(char *str);
-
+int print_binary(va_list types, char buffer[]);
+int print_int(va_list types, char buffer[]);
 #endif
