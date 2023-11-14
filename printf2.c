@@ -24,7 +24,7 @@ int _printf2(const char *format, ...)
 		{
 			int i = va_arg(list2, int);
 			char buffer[32];
-			int len = snprintf(buffer, sizeof(buffer), "d", i);
+			int len = snprintf(buffer, sizeof(buffer), "%d", i);
 
 			write(1, buffer, len);
 			count2 += len;

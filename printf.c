@@ -1,12 +1,10 @@
 #include "main.h"
-
 /**
  * _printf - prints anything
  * @format: the format string
  * Return: returns the length of inputs
  */
 int _printf(const char *format, ...)
-
 {
 	va_list list;
 	int count = 0;
@@ -14,9 +12,9 @@ int _printf(const char *format, ...)
 
 	if (format == NULL)
 		return (-1);
-	
+
 	va_start(list, format);
-	
+
 	while ((ch = *format++))
 	{
 		if (ch != '%')
