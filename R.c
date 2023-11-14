@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
  * _rot13 - Apply ROT13 substitution cipher to a string
  * @str: The input string
