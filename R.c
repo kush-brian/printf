@@ -8,7 +8,9 @@
 char *_rot13(char *str)
 {
 	char *ptr = str;
+
 	while (*ptr)
+
 	{
 		if ((*ptr >= 'a' && *ptr <= 'z') || (*ptr >= 'A' && *ptr <= 'Z'))
 		{
@@ -17,19 +19,20 @@ char *_rot13(char *str)
 		}
 		ptr++;
 	}
-	return str;
+	return (str);
 }
-
 /**
- * _printf2 - custom printf 
+ * _printf2 - custom printf
  * @format: initial specifiers
  * Return: returns count of input
  */
 int _printf2(const char *format, ...)
 {
 	va_list list2;
-	int count2 = 0;
-	
+	int count2;
+
+	count2 = 0;
+
 	va_start(list2, format);
 
 	if (format == NULL)
@@ -56,6 +59,7 @@ int _printf2(const char *format, ...)
 		{
 			char *str = va_arg(list2, char *);
 			char *rot13_str = _rot13(str);
+
 			write(1, rot13_str, strlen(rot13_str));
 			count2 += strlen(rot13_str);
 			format++;
