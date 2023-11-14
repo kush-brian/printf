@@ -61,7 +61,7 @@ int _printf2(const char *format, ...)
 
 			write(1, rot13_str, strlen(rot13_str));
 			count2 += strlen(rot13_str);
-g			format++;
+			format++;
 		}
 		format++;
 	}

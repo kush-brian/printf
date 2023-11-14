@@ -1,10 +1,10 @@
 #include "main.h"
 /**
- * _printf - customized printf
+ * _printf2 - customized printf
  * @format: initial specifiers
  * Return: returns count of input
  */
-int _printf(const char *format, ...)
+int _printf2(const char *format, ...)
 {
 	va_list list2;
 	int count2 = 0;

@@ -6,6 +6,7 @@
  * Return: returns the length of inputs
  */
 int _printf(const char *format, ...)
+
 {
 	va_list list;
 	int count = 0;
