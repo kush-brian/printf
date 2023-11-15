@@ -1,68 +1,48 @@
 #include "main.h"
 /**
- * _printf - printf function
- * @format: format
- * Return: the number of characters printed (excluding the null byte)
+ * _printf - prints anything
+ * @format: the format string
+ * Return: returns the length of inputs
  */
 int _printf(const char *format, ...)
 {
-        int i, printed_chars = 0;
-        int buff_ind = 0;
         va_list list;
-        char buffer[BUFF_SIZE]; /* Declare the buffer array*/
-	char ch;
+        int count = 0;
+        char ch;
 
         if (format == NULL)
                 return (-1);
 
         va_start(list, format);
 
-        for (i = 0; format && format[i] != '\0'; i++)
-
+        while ((ch = *format++))
         {
-                if (format[i] != '%')
+                if (ch != '%')
                 {
-                        buffer[buff_ind++] = format[i];
-                        if (buff_ind == BUFF_SIZE)
-                                print_buffer(buffer, &buff_ind);
-                        printed_chars++;
+                        write(1, &ch, 1);
+                        count++;
+                                buffer[buff_ind++] = forma                }
+                else if (*format == '%')
+                {
+                        write(1, "%", 1);
+                        count++;
+                        format++;
                 }
-                else
+                else if (*format == 's')
                 {
-                        i++;
-                        if (format[i] == 'c')
-                                print_char(list, buffer, &buff_ind);
-                        else if (format[i] == 's')
-                                print_string(list, buffer, &buff_ind);
-                        else if (format[i] == '%')
-                                print_percent(list, buffer, &buff_ind);
-                        else if (format[i] == 'd' || format[i] == 'i')
-                                print_int(list, buffer, &buff_ind);
-                        else
-                        {
-                                buffer[buff_ind++] = '%';
-                                buffer[buff_ind++] = format[i];
-                                if (buff_ind == BUFF_SIZE)
-                                        print_buffer(buffer, &buff_ind);
-                                printed_chars += 2;
-                        }
+                        char *str = va_arg(list, char*);
+
+                        count += write(1, str, strlen(str));
+                        format++;
+                }
+                else if (*format == 'c')
+                {
+                        char c = va_arg(list, int);
+
+                        count += write(1, &c, 1);
+                        format++;
                 }
         }
-                        write(1, &ch, 1);
-
-        print_buffer(buffer, &buff_ind);
         va_end(list);
-        return (printed_chars);
-}
-
-/**
- * print_buffer - prints the buffer and resets the buffer index
- * @buffer: buffer to print
- * @buff_ind: pointer to the buffer index
- * Return: void
- */
-void print_buffer(char buffer[], int *buff_ind)
-{
-        write(1, buffer, *buff_ind);
-        *buff_ind = 0;
+        return (count);
 }
