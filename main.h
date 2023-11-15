@@ -15,5 +15,4 @@ void print_buffer(char buffer[], int *buff_ind);
 void print_char(va_list types, char buffer[], int *buff_ind);
 void print_string(va_list types, char buffer[], int *buff_ind);
 void print_percent(va_list types, char buffer[], int *buff_ind);
-
 #endif
