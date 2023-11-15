@@ -21,7 +21,7 @@ int _printf(const char *format, ...)
                 {
                         write(1, &ch, 1);
                         count++;
-                                buffer[buff_ind++] = forma                }
+		}
                 else if (*format == '%')
                 {
                         write(1, "%", 1);
