@@ -33,6 +33,6 @@ void print_int(va_list types, char buffer[], int *buff_ind)
                         print_buffer(buffer, buff_ind);
 
                 num %= temp;
-        int num = va_arg(types, int);
+        num = va_arg(types, int);
         }
 }

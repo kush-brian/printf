@@ -1,3 +1,4 @@
+#include "main.h"
 /**
  * _printf - printf function
  * @format: format
@@ -9,6 +10,7 @@ int _printf(const char *format, ...)
         int buff_ind = 0;
         va_list list;
         char buffer[BUFF_SIZE]; /* Declare the buffer array*/
+	char ch;
 
         if (format == NULL)
                 return (-1);
