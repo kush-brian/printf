@@ -2,7 +2,7 @@
 
 /**
  * print_integers - writes integers to buffer
- * @inv: the arguments inventory with most commonly used arguments
+ * @dime: the arguments inventory with most commonly used arguments
  * @n: integer to be printed, may be type casted to long int.
  */
 void print_integers(list_t *dime, long int n)
@@ -58,8 +58,8 @@ void print_int(list_t *dime)
 }
 
 /**
- * p_longint - writes long integers to buffer
- * @inv: the arguments inventory with most commonly used arguments
+ * print_longint - writes long integers to buffer
+ * @dime: the arguments inventory with most commonly used arguments
  */
 void print_longint(list_t *dime)
 {

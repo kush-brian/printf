@@ -10,43 +10,40 @@
  */
 int _printf(const char *format, ...)
 {
-    va_list arguments;
-    list_t *dime;
-    void (*temp_func)(list_t *);
+	va_list arguments;
+	list_t *dime;
+	void (*temp_func)(list_t *);
 
-    if (!format)
-        return (-1);
+	if (!format)
+		return (-1);
 
-    va_start(arguments, format);
-    dime = the_list(&arguments, format);
+	va_start(arguments, format);
+	dime = the_list(&arguments, format);
+	for (; dime && format[dime->i] && !dime->error; dime->i++)
+	{
+		dime->c0 = format[dime->i];
+		if (dime->c0 != '%')
+			write_buffer(dime);
+		else
+		{
+			parsespec(dime);
+			temp_func = matchspec(dime);
+			if (temp_func)
+				temp_func(dime);
+			else if (dime->c1)
+			{
+				if (dime->flag)
+					dime->flag = 0
+						write_buffer(dime);
+			}
+			else
+			{
+				if (dime->space)
+					dime->buffer[--(dime->buf_index)] = '\0';
+				dime->error = 1;
+			}
+		}
+	}
 
-    for (; dime && format[dime->i] && !dime->error; dime->i++)
-    {
-        dime->c0 = format[dime->i];
-        if (dime->c0 != '%')
-            write_buffer(dime);
-        else
-        {
-            parsespec(dime);
-            temp_func = matchspec(dime);
-
-            if (temp_func)
-                temp_func(dime);
-            else if (dime->c1)
-            {
-                if (dime->flag)
-                    dime->flag = 0;
-                write_buffer(dime);
-            }
-            else
-            {
-                if (dime->space)
-                    dime->buffer[--(dime->buf_index)] = '\0';
-                dime->error = 1;
-            }
-        }
-    }
-
-    return end_func(dime);
+	return (end_func(dime));
 }
-
