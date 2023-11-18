@@ -33,7 +33,7 @@ int _printf(const char *format, ...)
 			else if (dime->c1)
 			{
 				if (dime->flag)
-					dime->flag = 0
+					dime->flag = 0;
 						write_buffer(dime);
 			}
 			else
