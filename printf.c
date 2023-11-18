@@ -1,48 +1,52 @@
 #include "main.h"
+
 /**
- * _printf - prints anything
- * @format: the format string
- * Return: returns the length of inputs
+ * _printf - replication of some of the features from C function printf()
+ * @_list: character string of directives, flags, modifiers, & specifiers
+ * Description: This function uses the variable arguments functionality and is
+ * supposed to resemble printf(). Please review the README for more
+ * information on how it works.
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
-        va_list list;
-        int count = 0;
-        char ch;
+    va_list arguments;
+    list_t *dime;
+    void (*temp_func)(list_t *);
 
-        if (format == NULL)
-                return (-1);
+    if (!format)
+        return (-1);
 
-        va_start(list, format);
+    va_start(arguments, format);
+    dime = the_list(&arguments, format);
 
-        while ((ch = *format++))
+    for (; dime && format[dime->i] && !dime->error; dime->i++)
+    {
+        dime->c0 = format[dime->i];
+        if (dime->c0 != '%')
+            write_buffer(dime);
+        else
         {
-                if (ch != '%')
-                {
-                        write(1, &ch, 1);
-                        count++;
-		}
-                else if (*format == '%')
-                {
-                        write(1, "%", 1);
-                        count++;
-                        format++;
-                }
-                else if (*format == 's')
-                {
-                        char *str = va_arg(list, char*);
+            parsespec(dime);
+            temp_func = matchspec(dime);
 
-                        count += write(1, str, strlen(str));
-                        format++;
-                }
-                else if (*format == 'c')
-                {
-                        char c = va_arg(list, int);
-
-                        count += write(1, &c, 1);
-                        format++;
-                }
+            if (temp_func)
+                temp_func(dime);
+            else if (dime->c1)
+            {
+                if (dime->flag)
+                    dime->flag = 0;
+                write_buffer(dime);
+            }
+            else
+            {
+                if (dime->space)
+                    dime->buffer[--(dime->buf_index)] = '\0';
+                dime->error = 1;
+            }
         }
-        va_end(list);
-        return (count);
+    }
+
+    return end_func(dime);
 }
+
